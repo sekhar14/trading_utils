@@ -2,6 +2,20 @@
   "name": "trading-coach",
   "version": "0.1.0",
   "description": "Discipline coach for discretionary F&O traders: checks every trade against your own rules, flags overtrading and emotional decisions, and paper-trades on live Zerodha Kite prices with a live P&L watcher.",
-  "author": { "name": "Sekhar" },
-  "keywords": ["trading", "coach", "zerodha", "kite", "nifty", "options", "paper-trading", "discipline"]
+  "author": {
+    "name": "Sekhar"
+  },
+  "keywords": [
+    "trading",
+    "coach",
+    "zerodha",
+    "kite",
+    "nifty",
+    "options",
+    "paper-trading",
+    "discipline"
+  ],
+  "license": "Apache-2.0",
+  "repository": "https://github.com/sekhar14/trading_utils",
+  "homepage": "https://github.com/sekhar14/trading_utils#readme"
 }

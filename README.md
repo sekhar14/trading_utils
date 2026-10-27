@@ -493,3 +493,15 @@ trading-coach/
         ├── analytics.py         style analytics + HTML report
         └── paper.py             paper fills, exits, P&L
 ```
+
+## Contributing
+
+`main` is protected: every change, including the maintainer's own, goes through a pull request.
+Fork the repo (or create a branch if you have access), make your change, and open a PR against `main`.
+
+## License
+
+Licensed under the [Apache License 2.0](LICENSE). Copyright 2026 Sekhar Banarjee.
+
+This software is for paper trading and trading-discipline practice. It is not investment advice and
+places no real orders.
