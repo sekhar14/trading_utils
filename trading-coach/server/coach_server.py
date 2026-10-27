@@ -52,9 +52,19 @@ def coach_status():
         "today": {"trades_taken": st["trades_taken"], "realized_pnl": st["realized_pnl"],
                   "unrealized_pnl": round(unrealized, 2), "day_pnl": round(st["realized_pnl"] + unrealized, 2),
                   "wins": st["wins"], "losses": st["losses"], "consecutive_losses": st["consecutive_losses"]},
-        "watcher": {"running": watcher.is_running(), "last_update": live.get("updated_at")},
+        "watcher": {"running": watcher.is_running(), "streaming_connected": live.get("connected"),
+                    "last_update": live.get("updated_at")},
+        "kiteconnect_installed": _kiteconnect_installed(),
         "data_dir": str(store.HOME),
     }
+
+
+def _kiteconnect_installed():
+    try:
+        kite.sdk()
+        return True
+    except kite.KiteError:
+        return False
 
 
 @tool("kite_login", "Start Zerodha Kite login. Returns a URL for the TRADER to open and log in themselves. A local listener on 127.0.0.1 captures the redirect and completes login automatically. Never ask for or handle the trader's Zerodha password.")
@@ -62,7 +72,7 @@ def kite_login():
     url = kite.login_url()
     port = store.load_config()["kite_redirect_port"]
     try:
-        kite.start_callback_server(timeout=300)
+        kite.start_callback_server(timeout=300, on_success=_restart_watcher_if_open)
         listening = True
     except OSError:
         listening = False
@@ -78,7 +88,16 @@ def kite_login():
 @tool("kite_complete_login", "Finish Kite login manually with the request_token (or the full redirect URL containing it).",
       {"request_token_or_url": S}, ["request_token_or_url"])
 def kite_complete_login(request_token_or_url):
-    return kite.exchange_request_token(kite.parse_request_token(request_token_or_url))
+    result = kite.exchange_request_token(kite.parse_request_token(request_token_or_url))
+    result["watcher"] = _restart_watcher_if_open()
+    return result
+
+
+def _restart_watcher_if_open():
+    """After a fresh login, resume streaming for any positions left open."""
+    if any(t["status"] == "open" for t in store.load_book()["trades"]):
+        return _ensure_watcher()
+    return {"running": False, "reason": "no open positions"}
 
 
 # ---------------------------------------------------------------- rules
@@ -269,6 +288,10 @@ def review(days=5):
 # ---------------------------------------------------------------- live P&L watcher
 
 def _ensure_watcher():
+    if store.load_config()["price_source"] == "manual":
+        return {"running": False, "reason": "price_source is manual; live streaming needs Kite"}
+    if not any(t["status"] == "open" for t in store.load_book()["trades"]):
+        return {"running": False, "reason": "no open positions; it starts automatically on the next paper entry"}
     if watcher.is_running():
         return {"running": True, "already": True, "follow_command": _follow_cmd()}
     out = open(store.path("watcher.out"), "a", encoding="utf-8")
@@ -285,7 +308,7 @@ def _follow_cmd():
     return f'"{sys.executable}" "{HERE / "watcher.py"}" --follow-events'
 
 
-@tool("watcher_start", "Start the background live P&L watcher (auto SL/target exits, daily-loss warnings). Returns follow_command: in Claude Code, run it with the Monitor tool so events stream into the chat.")
+@tool("watcher_start", "Start the background live P&L watcher. It streams ticks over Kite's WebSocket (no polling), auto-exits at SL/target and warns on daily-loss levels. Returns follow_command: in Claude Code, run it with the Monitor tool so events stream into the chat.")
 def watcher_start():
     return _ensure_watcher()
 

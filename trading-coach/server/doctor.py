@@ -2,8 +2,8 @@
 
     python trading-coach/server/doctor.py
 
-No third-party packages are needed; this verifies Python, the data folder,
-Kite configuration and network access. Secrets are never printed.
+Verifies Python, the kiteconnect package (needed for live streaming), the data
+folder, Kite configuration and network access. Secrets are never printed.
 """
 import socket
 import sys
@@ -33,10 +33,19 @@ def main():
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     try:
         from coach import analytics, behavior, kite, paper, store  # noqa: F401
-        report(OK, "Plugin modules import (standard library only, nothing to pip install)")
+        report(OK, "Plugin modules import")
     except Exception as e:  # noqa: BLE001
         report(FAIL, f"Plugin modules failed to import: {e}", "Re-install the plugin; files may be missing.")
         return
+
+    try:
+        import kiteconnect
+        from kiteconnect.__version__ import __version__ as kc_version
+        from kiteconnect import KiteTicker  # noqa: F401  (pulls in Twisted/autobahn for streaming)
+        report(OK, f"kiteconnect {kc_version} installed (REST + WebSocket streaming)")
+    except ImportError as e:
+        report(FAIL, f"kiteconnect not importable for this Python ({e})",
+               f'Run: "{sys.executable}" -m pip install "kiteconnect>=5.2,<6"')
 
     try:
         probe = store.path(".write-test")

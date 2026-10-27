@@ -20,7 +20,6 @@ DEFAULT_CONFIG = {
     "kite_api_secret": "",
     "kite_redirect_port": 5678,       # redirect URL: http://127.0.0.1:5678/kite/callback
     "slippage_ticks": 1,              # paper fills: buy at ltp + n ticks, sell at ltp - n ticks
-    "poll_seconds": 2,                # watcher poll interval (Kite quote API allows ~1 req/s)
 }
 
 DEFAULT_RULES = {

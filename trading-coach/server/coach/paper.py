@@ -89,6 +89,7 @@ def enter(contract, side, lots, stop_loss, target, reason, checklist_answers, em
             "status": "open",
             "opened_at": store.now().isoformat(timespec="seconds"),
             "underlying": contract["underlying"], "symbol": contract["symbol"],
+            "instrument_token": contract.get("instrument_token"),
             "tradingsymbol": contract["tradingsymbol"], "option_type": contract["option_type"],
             "strike": contract.get("strike"), "expiry": contract.get("expiry"),
             "spot_at_entry": contract.get("spot"), "side": side, "lots": int(lots),

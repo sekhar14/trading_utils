@@ -1,3 +1,4 @@
-# trading-coach has NO third-party dependencies.
-# It runs on the Python 3.9+ standard library only, so there is nothing to `pip install`.
-# Check your setup with:  python server/doctor.py
+# Zerodha's official SDK: REST quotes/instruments/login + KiteTicker WebSocket streaming.
+# Install into the same Python that runs the plugin:
+#   python -m pip install -r trading-coach/requirements.txt
+kiteconnect>=5.2,<6
