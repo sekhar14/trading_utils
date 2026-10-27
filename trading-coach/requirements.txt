@@ -1,0 +1,3 @@
+# trading-coach has NO third-party dependencies.
+# It runs on the Python 3.9+ standard library only, so there is nothing to `pip install`.
+# Check your setup with:  python server/doctor.py

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trading Coach mockups</title>
+<!-- Mockup of the coaching conversation, used for README screenshots. Open with #revenge, #clean or #live. Sample data only. -->
+<style>
+:root{--page:#1a1a19;--panel:#232321;--ink:#f0efec;--ink2:#c3c2b7;--muted:#898781;--line:#383835;
+--user:#2f2f2c;--accent:#d97757;--block:#e66767;--warn:#e0a030;--ok:#3fb950;--code:#2a2a27;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+.panel{display:none;max-width:860px;margin:0 auto;padding:28px 28px 32px}
+.panel:target,.panel.show{display:block}
+.bar{display:flex;align-items:center;gap:10px;color:var(--ink2);font-size:13px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.bar .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.bar .tag{margin-left:auto;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 9px}
+.user{background:var(--user);border-radius:14px;padding:11px 15px;margin:0 0 18px auto;max-width:78%;width:fit-content}
+.ai{margin:0 0 18px}
+.tool{font:12.5px/1.4 ui-monospace,"Cascadia Code",Consolas,monospace;color:var(--muted);margin:3px 0}
+.tool b{color:var(--ink2);font-weight:500}
+.tool::before{content:"● ";color:var(--ok)}
+.contract{display:inline-block;background:var(--code);border:1px solid var(--line);border-radius:8px;padding:6px 11px;margin:8px 0 10px;
+ font:13px ui-monospace,"Cascadia Code",Consolas,monospace;color:var(--ink)}
+.flags{margin:6px 0 12px;padding:0;list-style:none}
+.flags li{margin:6px 0}
+.sev{display:inline-block;font:600 11px ui-monospace,Consolas,monospace;border-radius:4px;padding:1px 6px;min-width:50px;text-align:center;margin-right:10px}
+.sev.WARN{color:#1a1a19;background:var(--warn)}.sev.BLOCK{color:#fff;background:var(--block)}.sev.OK{color:#1a1a19;background:var(--ok)}
+ol{margin:6px 0 10px;padding-left:22px}ol li{margin:2px 0}
+.sub{color:var(--ink2);font-size:13px;margin:12px 0 6px;font-weight:600}
+.event{font:13px ui-monospace,"Cascadia Code",Consolas,monospace;background:var(--code);border-left:3px solid var(--block);
+ border-radius:6px;padding:8px 12px;margin:0 0 14px;color:var(--ink)}
+.event.good{border-left-color:var(--ok)}.event.warn{border-left-color:var(--warn)}
+.event .k{color:var(--muted)}
+.input{margin-top:24px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--muted);font-size:14px}
+b.hl{color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- 1. Revenge trade caught -->
+<section class="panel" id="revenge">
+  <div class="bar"><span class="dot"></span>Claude Code · trading-coach<span class="tag">mockup · sample data</span></div>
+  <div class="user">buy nifty ATM CE 2 lots, sl 15 points. need to recover that loss quickly, this is a sure shot</div>
+  <div class="ai">
+    <div class="tool"><b>trading-coach</b> · coach_status</div>
+    <div class="tool"><b>trading-coach</b> · resolve_option NIFTY CE ATM</div>
+    <div class="tool"><b>trading-coach</b> · pre_trade_check</div>
+    <div class="contract">NIFTY 28-Oct 24500 CE · spot 24,512.30 · LTP 112.40</div>
+    <div>Hold on. Before this goes anywhere:</div>
+    <ul class="flags">
+      <li><span class="sev WARN">WARN</span>Your last loss (−₹1,433 on a NIFTY CE) was 6 min ago. Cooldown is 15 min.</li>
+      <li><span class="sev WARN">WARN</span>Same NIFTY CE side again, straight after losing on it.</li>
+      <li><span class="sev WARN">WARN</span>Sizing up from 1 to 2 lots after a loss.</li>
+      <li><span class="sev WARN">WARN</span>Loaded words in your reason: <i>recover, quickly, sure shot</i>.</li>
+      <li><span class="sev WARN">WARN</span>No setup named.</li>
+    </ul>
+    <div>This is the pattern you told me is your biggest leak: the first loss, then double size to get it back.
+    <b class="hl">Which setup from your playbook is this: ORB 15m, VWAP reclaim or PDH breakout?</b>
+    If you can't name one, your plan says wait until the cooldown ends at 11:42.</div>
+  </div>
+  <div class="user">yeah… no setup. i'll wait</div>
+  <div class="ai">Good call. That's the hardest trade to skip and the one that matters most. Cooldown ends 11:42. Day P&amp;L stays at −₹1,433.</div>
+  <div class="input">Reply to Claude…</div>
+</section>
+
+<!-- 2. Clean trade with setup + checklist -->
+<section class="panel" id="clean">
+  <div class="bar"><span class="dot"></span>Claude Code · trading-coach<span class="tag">mockup · sample data</span></div>
+  <div class="user">buy nifty ATM CE 1 lot, SL 92 target 140. ORB 15m, broke the opening range on volume</div>
+  <div class="ai">
+    <div class="tool"><b>trading-coach</b> · resolve_option NIFTY CE ATM</div>
+    <div class="tool"><b>trading-coach</b> · pre_trade_check setup="ORB 15m"</div>
+    <div class="contract">NIFTY 28-Oct 24500 CE · LTP 112.40 · risk to SL ≈ ₹1,329</div>
+    <div class="sub">ORB 15m: are these true right now?</div>
+    <ol><li>15m opening range defined</li><li>A 15m candle closed outside the range</li><li>Volume above the 20-bar average</li></ol>
+    <div class="sub">Your checklist</div>
+    <ol start="4"><li>Is this in today's plan?</li><li>Is it with the 15-minute trend?</li><li>Are you calm and not recovering a loss?</li></ol>
+    <ul class="flags"><li><span class="sev WARN">WARN</span>Reward:risk is 1.35. Your minimum is 1.5. A target of 143 gets you there.</li></ul>
+    <div>And how are you feeling right now?</div>
+  </div>
+  <div class="user">all yes, calm. moving target to 143</div>
+  <div class="ai">
+    <div class="tool"><b>trading-coach</b> · paper_enter</div>
+    <div class="tool"><b>trading-coach</b> · watcher_start</div>
+    <div>Paper trade <b>P20261027-002</b> is open: BUY 1 lot NIFTY 24500 CE @ <b>112.45</b> · SL 92 · target 143 · risk ₹1,329.
+    I'm watching the live P&amp;L and will tell you the moment either level is hit.</div>
+  </div>
+  <div class="input">Reply to Claude…</div>
+</section>
+
+<!-- 3. Live P&L events -->
+<section class="panel" id="live">
+  <div class="bar"><span class="dot"></span>Claude Code · trading-coach · watching live P&amp;L<span class="tag">mockup · sample data</span></div>
+  <div class="event warn"><span class="k">[10:36:12]</span> LOSS_WARNING: Day P&amp;L −2,540 is 50% of your max daily loss (5,000).</div>
+  <div class="ai">You're halfway to your daily limit with one position still open. Nothing to do yet. The stop is in place, so let it work.</div>
+  <div class="event"><span class="k">[10:41:07]</span> SL_HIT: P20261027-002 NIFTY 24500 CE closed @ 92.0 | P&amp;L −1,329</div>
+  <div class="ai">The stop did its job: <b>−₹1,329</b>, exactly the risk you planned, no more. Day P&amp;L is −₹2,762 (55% of your limit).
+    Cooldown runs until <b class="hl">10:56</b>. That's two losses, and your rule says the second loss in a row ends the day.</div>
+  <div class="user">market is reversing now, one more trade to get it back?</div>
+  <div class="ai">
+    <div class="tool"><b>trading-coach</b> · pre_trade_check</div>
+    <ul class="flags">
+      <li><span class="sev BLOCK">BLOCK</span>2 losses in a row. Your rule says stop at 2.</li>
+      <li><span class="sev WARN">WARN</span>Loaded words: <i>one more, get it back</i>.</li>
+    </ul>
+    <div>"One more to get it back" is the trade your journal shows costing you most: <b>−₹4,210</b> over 9 trades this month.
+    Closing the book for today is the winning move. Want me to run today's review instead?</div>
+  </div>
+  <div class="input">Reply to Claude…</div>
+</section>
+
+<script>
+  const id = (location.hash || "#revenge").slice(1);
+  (document.getElementById(id) || document.getElementById("revenge")).classList.add("show");
+</script>
+</body>
+</html>

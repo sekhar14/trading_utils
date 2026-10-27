@@ -1,0 +1,11 @@
+{
+  "name": "trading-utils",
+  "owner": { "name": "Sekhar" },
+  "plugins": [
+    {
+      "name": "trading-coach",
+      "source": "./trading-coach",
+      "description": "Discipline coach for discretionary F&O traders with paper trading on live Zerodha prices."
+    }
+  ]
+}

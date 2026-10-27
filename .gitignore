@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+# Personal data never belongs in the repo (it lives in ~/.trading-coach by default)
+.trading-coach/
+config.json
+kite_session.json
+trades.json
+events.log
+.claude/settings.local.json

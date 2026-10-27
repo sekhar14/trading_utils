@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "trading-coach": {
+      "command": "python",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/coach_server.py"]
+    }
+  }
+}
